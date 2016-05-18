@@ -117,6 +117,7 @@ TO_DIGITS =
     ]
 ][MOD[n][TEN]] } }]
 
+
 def to_interger(proc)
   proc[-> n { n + 1 }][0]
 end
@@ -125,12 +126,13 @@ def to_boolean(proc)
   IF[proc][true][false]
 end
 
-def to_array(proc)
+def to_array(proc, count = nil)
   array = []
 
-  until to_boolean(IS_EMPTY[proc])
+  until to_boolean(IS_EMPTY[proc]) || count == 0
     array.push(FIRST[proc])
     proc = REST[proc]
+    count = count - 1 unless count.nil?
   end
 
   array
@@ -144,21 +146,19 @@ def to_string(s)
   to_array(s).map { |c| to_char(c) }.join
 end
 
-#puts(to_array(TO_DIGITS[HUNDRED]).map { |p| to_interger(p) })
-
-solution = 
-  MAP[RANGE[ONE][HUNDRED]][-> n {
-  IF[IS_ZERO[MOD[n][FIFTEEN]]][
-    FIZZBUZZ
-  ][IF[IS_ZERO[MOD[n][THREE]]][
-    FIZZ
-  ][IF[IS_ZERO[MOD[n][FIVE]]][
-    BUZZ
-  ][
-    TO_DIGITS[n]
-  ]]]
-}]
-
-to_array(solution).each do |p|
-  puts to_string(p)
-end
+#solution = 
+#  MAP[RANGE[ONE][HUNDRED]][-> n {
+#  IF[IS_ZERO[MOD[n][FIFTEEN]]][
+#    FIZZBUZZ
+#  ][IF[IS_ZERO[MOD[n][THREE]]][
+#    FIZZ
+#  ][IF[IS_ZERO[MOD[n][FIVE]]][
+#    BUZZ
+#  ][
+#    TO_DIGITS[n]
+#  ]]]
+#}]
+#
+#to_array(solution).each do |p|
+#  puts to_string(p)
+#end
